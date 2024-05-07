@@ -27,9 +27,9 @@ class UserController extends Controller
 
         if (Auth::attempt($infologin)) {
             if (Auth::user()->role == 'admin') {
-                return redirect('admin/penjual');
+                return redirect('/admin');
             } elseif (Auth::user()->role == 'customer')
-                return redirect('admin/customer');
+                return redirect('/customer');
         } else {
             return redirect('')->withErrors('Username dan password yang dimasukkan salah')->withInput();
         }
@@ -37,7 +37,7 @@ class UserController extends Controller
 
     function logout() {
         Auth::logout();
-        return redirect('');
+        return redirect('/login');
     }
 
 }

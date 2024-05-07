@@ -7,14 +7,10 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     function index() {
-        return view('admin');
-    }
-
-    function penjual() {
-        return view('admin');
+        return view('layout.admin');
     }
 
     function customer() {
-        return view('false');
+        return view('layout.user');
     }
 }

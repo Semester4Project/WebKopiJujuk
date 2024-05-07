@@ -29,25 +29,33 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::get('/rumah', function () {
+    return view('rumah');
+});
+
 Route::middleware(['guest'])->group(function (){
-    Route::get('/login', [UserController::class, 'index'])->name('login');
-    Route::post('/login', [UserController::class, 'login']);
+    // Route::get('/login', [UserController::class, 'index']); // Hapus middleware guest di sini
+    Route::get('/login', function () {
+        return view('login');
+    });
+    Route::post('/login', [UserController::class, 'login'])->name('login');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/home', function () {
-        return redirect('/admin');
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+    Route::middleware(['userAkses:admin'])->group(function () {
+        Route::get('/home', function () {
+            return redirect()->route('index'); // Mengarahkan kembali ke rute admin.index
+        })->name('layout.home'); // Mengatur nama untuk rute home admin
+        Route::get('/admin', [AdminController::class, 'index'])->name('index');
+        Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
     });
-    Route::get('/admin/penjual', [AdminController::class, 'penjual'])->middleware('userAkses:admin');
-    Route::get('/admin/customer', [AdminController::class, 'customer'])->middleware('userAkses:customer');
-    Route::get('/logout', [UserController::class, 'logout']);
+
+    Route::middleware(['userAkses:customer'])->group(function () {
+        Route::get('/home', function () {
+            return redirect()->route('customer'); // Mengarahkan kembali ke rute customer
+        })->name('layout.customer'); // Mengatur nama untuk rute home customer
+        Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
+    });
 });
-
-// // Route Api Login
-// Route::post('/masuk', [AuthenticationController::class, 'login']);
-
-// // Rout Api Logout
-// Route::get('/keluar', [AuthenticationController::class, 'logout'])->middleware(['auth:sanctum']);
-
-// Route::group(['middleware'])
