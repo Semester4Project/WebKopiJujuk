@@ -1,0 +1,14 @@
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    padding-top: 3.5rem;
+    margin-top: 64px;
+    overflow-y: auto;
+  }
+
+  #main {
+    margin-left: 16rem; /* Adjust according to sidebar width */
+  }
