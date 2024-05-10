@@ -29,6 +29,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::get('/product', function () {
+    return view('product');
+});
+
 Route::get('/rumah', function () {
     return view('rumah');
 });
@@ -46,15 +50,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['userAkses:admin'])->group(function () {
         Route::get('/home', function () {
-            return redirect()->route('index'); // Mengarahkan kembali ke rute admin.index
+            return redirect()->route('customer'); // Mengarahkan admin ke halaman customer
         })->name('layout.home'); // Mengatur nama untuk rute home admin
-        Route::get('/admin', [AdminController::class, 'index'])->name('index');
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index'); // Mengatur nama rute admin
         Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
     });
 
     Route::middleware(['userAkses:customer'])->group(function () {
         Route::get('/home', function () {
-            return redirect()->route('customer'); // Mengarahkan kembali ke rute customer
+            return redirect()->route('customer'); // Mengarahkan kembali ke halaman customer
         })->name('layout.customer'); // Mengatur nama untuk rute home customer
         Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
     });
