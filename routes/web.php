@@ -29,6 +29,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::get('/product', function () {
+    return view('product');
+});
+
 Route::get('/rumah', function () {
     return view('rumah');
 });
