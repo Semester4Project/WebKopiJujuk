@@ -22,7 +22,7 @@ class UserController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(), 
             [
-                'name' => 'required',
+                'username' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
@@ -36,9 +36,10 @@ class UserController extends Controller
             }
 
             $user = User::create([
-                'name' => $request->name,
+                'username' => $request->username,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'role' => 'customer' // Atur peran pengguna di sini
             ]);
 
             return response()->json([

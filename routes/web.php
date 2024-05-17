@@ -31,10 +31,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-// Route::get('/product', function () {
-//     return view('product');
-// });
-
 Route::get('/kategori', function () {
     return view('fitur.kategori');
 });
@@ -49,7 +45,11 @@ Route::get('/rumah', function () {
 
 Route::get('/product', [ProductController::class, 'listproduct'])->name('listproduct');
 Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
+Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
+
 Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name('addkategori');
+// Rute untuk menyimpan data kategori
+Route::post('/TambahKategori', [KategoriController::class, 'store'])->name('categories.store');
 
 Route::middleware(['guest'])->group(function (){
     // Route::get('/login', [UserController::class, 'index']); // Hapus middleware guest di sini
