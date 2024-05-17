@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function listProduct()
-    {
-        return view('product');
-    }
 
     public function addProduct()
     {
@@ -24,7 +20,7 @@ class ProductController extends Controller
         // Validasi data yang dikirimkan
         $request->validate([
             'nama_produk' => 'required',
-            'kategori_id' => 'required', // Ubah id_kategori menjadi kategori_id
+            'id_kategori' => 'required', // Ubah id_kategori menjadi kategori_id
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'required',
             'berat' => 'required|numeric',
@@ -34,7 +30,7 @@ class ProductController extends Controller
         // Simpan data ke database
         $product = new Product();
         $product->nama_produk = $request->nama_produk;
-        $product->kategori_id = $request->kategori_id; // Ubah id_kategori menjadi kategori_id
+        $product->id_kategori = $request->id_kategori; // Ubah id_kategori menjadi kategori_id
         $product->deskripsi = $request->deskripsi;
         $product->berat = $request->berat;
         $product->harga = $request->harga;

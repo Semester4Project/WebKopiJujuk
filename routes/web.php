@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ListProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Auth\Events\Login;
@@ -43,7 +44,7 @@ Route::get('/rumah', function () {
     return view('rumah');
 });
 
-Route::get('/product', [ProductController::class, 'listproduct'])->name('listproduct');
+Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
 Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
 Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
 

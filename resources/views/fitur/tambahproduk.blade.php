@@ -9,41 +9,45 @@
         <h6 class="m-0 font-weight-bold text-primary">Tambah Produk</h6>
     </div>
     <div class="card-body">
-      @if (session('success'))
-      <div class="alert alert-success">
-          {{ session('success') }}
-      </div>
-      @endif
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="nama_produk">Nama Produk</label>
-                <input type="text" class="form-control" id="nama_produk" name="nama_produk" placeholder="Masukkan Nama Produk">
+                <input type="text" class="form-control" id="nama_produk" name="nama_produk" placeholder="Masukkan Nama Produk" value="{{ old('nama_produk') }}">
             </div>
             <div class="form-group">
-                <label for="kategori_id">Pilih Kategori</label>
-                <select class="form-control" id="kategori_id" name="kategori_id">
+                <label for="id_kategori">Pilih Kategori</label>
+                <select class="form-control" id="id_kategori" name="id_kategori">
                     <option value="">Pilih Kategori</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id_kategori }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div>
-            <div class="custom-file mb-3">
-                <input type="file" class="custom-file-input" id="foto" name="foto">
-                <label class="custom-file-label" for="foto">Pilih Foto</label>
+            </div>            
+            <div class="form-group">
+                <label for="foto">Foto</label>
+                <input type="file" class="form-control-file" id="foto" name="foto">
             </div>
             <div class="form-group">
                 <label for="deskripsi">Deskripsi</label>
-                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
+                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
             </div>
             <div class="form-group">
-                <label for="berat">Berat (dalam gram)</label>
-                <input type="number" class="form-control" id="berat" name="berat" placeholder="Masukkan Berat dalam gram">
+                <label for="berat">Berat (gram)</label>
+                <input type="number" class="form-control" id="berat" name="berat" placeholder="Masukkan Berat dalam gram" value="{{ old('berat') }}">
             </div>
             <div class="form-group">
-                <label for="harga">Harga (dalam Rupiah)</label>
-                <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga dalam Rupiah">
+                <label for="harga">Harga (Rupiah)</label>
+                <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga dalam Rupiah" value="{{ old('harga') }}">
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
