@@ -9,6 +9,18 @@ class Product extends Model
 {
     use HasFactory;
 
+        // Nama tabel jika berbeda dari 'products'
+        protected $table = 'products';
+
+        // Nama kolom primary key jika berbeda dari 'id'
+        protected $primaryKey = 'id_product';
+    
+        // Jika primary key bukan auto-incrementing
+        public $incrementing = false;
+    
+        // Jika primary key bukan tipe integer
+        protected $keyType = 'string';
+
     protected $fillable = [
         'nama_produk',
         'id_kategori',

@@ -24,14 +24,31 @@
                     </thead>
                     <tbody>
                         @foreach($products as $product)
-                        <tr>
-                            <td>{{ $product->nama_produk }}</td>
-                            <td>{{ $product->deskripsi }}</td>
-                            <td>{{ $product->berat }}</td>
-                            <td>{{ $product->harga }}</td>
-                            <td><img src="{{ asset('images/' . $product->foto) }}" alt="Product Image" style="max-width: 100px;"></td>
-                        </tr>
-                        @endforeach
+<tr>
+    <td>
+        <a href="{{ route('detailProduct', $product->id_product) }}">
+            {{ $product->nama_produk }}
+        </a>
+    </td>
+    <td>{{ $product->deskripsi }}</td>
+    <td>{{ $product->berat }}</td>
+    <td>{{ $product->harga }}</td>
+    <td>
+        @if($product->foto)
+            @php
+                $fotos = json_decode($product->foto);
+            @endphp
+            @if(is_array($fotos) && count($fotos) > 0)
+                {{-- Menampilkan hanya foto pertama --}}
+                <img src="{{ asset('images/' . $fotos[0]) }}" alt="Product Image" style="max-width: 100px;">
+            @endif
+        @else
+            <span>No Image</span>
+        @endif
+    </td>
+</tr>
+@endforeach
+
                     </tbody>
                 </table>
             </div>

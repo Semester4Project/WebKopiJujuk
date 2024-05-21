@@ -35,7 +35,7 @@
             </div>            
             <div class="form-group">
                 <label for="foto">Foto</label>
-                <input type="file" class="form-control-file" id="foto" name="foto">
+                <input type="file" class="form-control-file" id="foto" name="foto[]" multiple>
             </div>
             <div class="form-group">
                 <label for="deskripsi">Deskripsi</label>

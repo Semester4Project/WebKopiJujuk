@@ -55,6 +55,9 @@ Route::get('/PesananSelesai', [PesananController::class, 'PesananSelesai'])->nam
 Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlaporan');
 
 Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
+// Route untuk detail produk
+Route::get('/products/{id}', [ListProductController::class, 'detail'])->name('detailProduct');
+
 Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
 Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
 

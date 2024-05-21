@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-
     public function addProduct()
     {
         $categories = Category::all();
@@ -20,8 +19,8 @@ class ProductController extends Controller
         // Validasi data yang dikirimkan
         $request->validate([
             'nama_produk' => 'required',
-            'id_kategori' => 'required', // Ubah id_kategori menjadi kategori_id
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'id_kategori' => 'required', // Pastikan sesuai dengan nama field di database
+            'foto.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk multiple files
             'deskripsi' => 'required',
             'berat' => 'required|numeric',
             'harga' => 'required|numeric',
@@ -30,19 +29,37 @@ class ProductController extends Controller
         // Simpan data ke database
         $product = new Product();
         $product->nama_produk = $request->nama_produk;
-        $product->id_kategori = $request->id_kategori; // Ubah id_kategori menjadi kategori_id
+        $product->id_kategori = $request->id_kategori; // Pastikan sesuai dengan nama field di database
         $product->deskripsi = $request->deskripsi;
         $product->berat = $request->berat;
         $product->harga = $request->harga;
 
         // Upload gambar
         if ($request->hasFile('foto')) {
-            $image = $request->file('foto');
-            $imageName = time().'.'.$image->extension();
-            $image->move(public_path('images'), $imageName);
-            $product->foto = $imageName;
+            // Inisialisasi array untuk menyimpan nama file yang diunggah
+            $imageNames = [];
+        
+            // Ambil semua file yang diunggah dengan nama input 'foto'
+            $files = $request->file('foto');
+        
+            foreach ($files as $file) {
+                // Membuat nama file unik dengan timestamp dan ekstensi asli
+                $imageName = time().'_'.$file->getClientOriginalName();
+                
+                // Memindahkan file ke direktori public/images
+                $file->move(public_path('images'), $imageName);
+                
+                // Menyimpan nama file ke dalam array
+                $imageNames[] = $imageName;
+            }
+        
+            // Menyimpan nama file ke dalam model produk sebagai JSON string
+            $product->foto = json_encode($imageNames);
+        } else {
+            return response()->json(['message' => 'No files uploaded'], 400);
         }
 
+        // Menyimpan model produk
         $product->save();
 
         return redirect()->route('listproduct')->with('success', 'Produk berhasil ditambahkan.');
