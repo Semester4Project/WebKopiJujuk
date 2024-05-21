@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ListProductController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Auth\Events\Login;
@@ -43,6 +45,14 @@ Route::get('/TambahProduk', function () {
 Route::get('/rumah', function () {
     return view('rumah');
 });
+
+
+Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
+Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
+Route::get('/PesananDikrim', [PesananController::class, 'PesananDikirim'])->name('Pesanandikirim');
+Route::get('/PesananSelesai', [PesananController::class, 'PesananSelesai'])->name('Pesananselesai');
+
+Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlaporan');
 
 Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
 Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
