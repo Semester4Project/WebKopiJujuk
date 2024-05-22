@@ -27,7 +27,7 @@
                 </div>
             @endif
         </div>
-        <form action="" method="POST">
+        <form action="{{ route('login.post') }}" method="POST">
             @csrf
             <div class="login-form">
                 <img src="{{asset('img/email.png')}}" alt="email" class="email-logo">
