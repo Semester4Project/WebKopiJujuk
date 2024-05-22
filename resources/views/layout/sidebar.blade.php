@@ -8,14 +8,25 @@
         </a>
         <hr class="sidebar-divider my-0">
         <li class="nav-item active">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{{route('admin')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Pesanan</span></a>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+            aria-expanded="true" aria-controls="collapseBootstrap">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Pesanan</span>
+          </a>
+          <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Pesanan</h6>
+              <a class="collapse-item" href="{{route('PesananBaru')}}">Pesanan Baru</a>
+              <a class="collapse-item" href="{{route('pesanansiapdikirim')}}">Pesanan Siap Dikirim</a>
+              <a class="collapse-item" href="{{route('Pesanandikirim')}}">Pesanan Dikirim</a>
+              <a class="collapse-item" href="{{route('Pesananselesai')}}">Pesanan Selesai</a>
+            </div>
+          </div>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="{{route('listproduct')}}">
@@ -23,9 +34,14 @@
             <span>Product</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{{route('viewlaporan')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Laporan</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Profile</span></a>
         </li>
         <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="nav-item active">
           @csrf
