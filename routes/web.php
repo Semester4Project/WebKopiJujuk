@@ -26,9 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 
 Route::get('/kategori', function () {
     return view('fitur.kategori');
@@ -43,23 +43,23 @@ Route::get('/rumah', function () {
 });
 
 
-// Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
-// Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
-// Route::get('/PesananDikrim', [PesananController::class, 'PesananDikirim'])->name('Pesanandikirim');
-// Route::get('/PesananSelesai', [PesananController::class, 'PesananSelesai'])->name('Pesananselesai');
+Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
+Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
+Route::get('/PesananDikrim', [PesananController::class, 'PesananDikirim'])->name('Pesanandikirim');
+Route::get('/PesananSelesai', [PesananController::class, 'PesananSelesai'])->name('Pesananselesai');
 
-// Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlaporan');
+Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlaporan');
 
-// Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
-// // Route untuk detail produk
-// Route::get('/products/{id}', [ListProductController::class, 'detail'])->name('detailProduct');
+Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
+// Route untuk detail produk
+Route::get('/products/{id}', [ListProductController::class, 'detail'])->name('detailProduct');
 
-// Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
-// Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
+Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
+Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
 
-// Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name('addkategori');
-// // Rute untuk menyimpan data kategori
-// Route::post('/TambahKategori', [KategoriController::class, 'store'])->name('categories.store');
+Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name('addkategori');
+// Rute untuk menyimpan data kategori
+Route::post('/TambahKategori', [KategoriController::class, 'store'])->name('categories.store');
 
 // Route::middleware(['guest'])->group(function (){
 //     // Route::get('/login', [UserController::class, 'index']); // Hapus middleware guest di sini
@@ -96,7 +96,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login.post');
 
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('layout.admin');
+        return view('dashboard');
     })->name('admin.dashboard');
 });
 
