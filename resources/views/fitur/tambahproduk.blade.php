@@ -50,6 +50,7 @@
                 <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga dalam Rupiah" value="{{ old('harga') }}">
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ route('listproduct') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </div>

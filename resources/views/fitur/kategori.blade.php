@@ -21,6 +21,7 @@
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{{ route('listproduct') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
     <div class="table-responsive p-3">
