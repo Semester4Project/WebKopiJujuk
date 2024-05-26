@@ -51,6 +51,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('listproduct') }}" class="btn btn-secondary">Kembali</a>
+            <button type="reset" class="btn btn-dark">Reset</button>
         </form>
     </div>
 </div>

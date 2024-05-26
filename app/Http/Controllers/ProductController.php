@@ -11,6 +11,7 @@ class ProductController extends Controller
     public function addProduct()
     {
         $categories = Category::all();
+        
         return view('fitur.tambahproduk', compact('categories'));
     }
 
@@ -64,4 +65,11 @@ class ProductController extends Controller
 
         return redirect()->route('listproduct')->with('success', 'Produk berhasil ditambahkan.');
     }
+
+    public function show($id)
+{
+    $product = Product::with('category')->findOrFail($id);
+    return view('product.detailProduct', compact('product'));
+}
+
 }

@@ -49,9 +49,8 @@
                                 @endif
                             </td>
                             <td>
-                                {{-- {{ route('editProduct', $product->id_product) }} --}}
                                 <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                <form action="{{ route('deleteProduct', $product->id_product) }}" method="POST" style="display:inline-block;">
+                                <form action="#" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
@@ -75,9 +74,25 @@
 
 <!-- Page level custom scripts -->
 <script>
-    $(document).ready(function () {
-        $('#dataTableHover').DataTable();
-    });
+    // $(document).ready(function () {
+    //     $('#dataTableHover').DataTable();
+
+    //     // Add click event listener to each row
+    //     $('.product-row').on('click', function() {
+    //         var productId = $(this).data('id');
+    //         window.location.href = "{{ url('/detail') }}/" + productId;
+    //     });
+
+    //     // Add hover effect to rows
+    //     $('.product-row').hover(
+    //         function() {
+    //             $(this).css('cursor', 'pointer');
+    //         },
+    //         function() {
+    //             $(this).css('cursor', 'default');
+    //         }
+    //     );
+    // });
 
     function tambahProduk() {
         window.location.href = "{{ route('addproduct') }}";
@@ -86,6 +101,5 @@
     function addKategori() {
         window.location.href = "{{ route('addkategori') }}";
     }
-
 </script>
 @endsection

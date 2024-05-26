@@ -33,6 +33,6 @@ class Product extends Model
     // Definisi relasi ke model Category
     public function category()
     {
-        return $this->belongsTo(Category::class, 'id_kategori');
+        return $this->belongsTo(Category::class, 'id_kategori', 'id_kategori');
     }
 }
