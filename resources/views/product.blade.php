@@ -16,7 +16,6 @@
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Deskripsi</th>
                             <th>Berat</th>
                             <th>Harga</th>
                             <th>Gambar</th>
@@ -32,7 +31,6 @@
                                     {{ $product->nama_produk }}
                                 </a>
                             </td>
-                            <td>{{ $product->deskripsi }}</td>
                             <td>{{ $product->berat }}</td>
                             <td>{{ $product->harga }}</td>
                             <td>
@@ -42,15 +40,15 @@
                                     @endphp
                                     @if(is_array($fotos) && count($fotos) > 0)
                                         {{-- Menampilkan hanya foto pertama --}}
-                                        <img src="{{ asset('images/' . $fotos[0]) }}" alt="Product Image" style="max-width: 100px;">
+                                        <img src="{{ asset('storage/images/' . $fotos[0]) }}" alt="Product Image" style="max-width: 100px;">
                                     @endif
                                 @else
                                     <span>No Image</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                <form action="#" method="POST" style="display:inline-block;">
+                                <a href="{{ route('products.edit', ['id_product' => $product->id_product]) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <form action="{{ route('products.destroy', ['id_product' => $product->id_product]) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
@@ -74,26 +72,6 @@
 
 <!-- Page level custom scripts -->
 <script>
-    // $(document).ready(function () {
-    //     $('#dataTableHover').DataTable();
-
-    //     // Add click event listener to each row
-    //     $('.product-row').on('click', function() {
-    //         var productId = $(this).data('id');
-    //         window.location.href = "{{ url('/detail') }}/" + productId;
-    //     });
-
-    //     // Add hover effect to rows
-    //     $('.product-row').hover(
-    //         function() {
-    //             $(this).css('cursor', 'pointer');
-    //         },
-    //         function() {
-    //             $(this).css('cursor', 'default');
-    //         }
-    //     );
-    // });
-
     function tambahProduk() {
         window.location.href = "{{ route('addproduct') }}";
     }

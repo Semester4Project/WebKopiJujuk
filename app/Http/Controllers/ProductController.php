@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -66,10 +68,79 @@ class ProductController extends Controller
         return redirect()->route('listproduct')->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    public function show($id)
+public function edit($id_product)
 {
-    $product = Product::with('category')->findOrFail($id);
-    return view('product.detailProduct', compact('product'));
+    $product = Product::findOrFail($id_product);
+    $categories = Category::all();
+
+    return view('product.editProduct', compact('product', 'categories'));
 }
+
+public function update(Request $request, $id_product)
+    {
+        // Validate incoming request
+        $validator = Validator::make($request->all(), [
+            'nama_produk' => 'required|string|max:255',
+            'id_kategori' => 'required|integer|exists:categories,id_kategori',
+            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'deskripsi' => 'required|string',
+            'berat' => 'required|integer',
+            'harga' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Find the product by ID
+        $product = Product::findOrFail($id_product);
+
+        // Update product fields
+        $product->nama_produk = $request->nama_produk;
+        $product->id_kategori = $request->id_kategori;
+        $product->deskripsi = $request->deskripsi;
+        $product->berat = $request->berat;
+        $product->harga = $request->harga;
+
+        // Handle file upload for product images
+        if ($request->hasFile('foto')) {
+            // Delete old images if they exist
+            if ($product->foto) {
+                foreach (json_decode($product->foto) as $foto) {
+                    Storage::delete('public/images/' . $foto);
+                }
+            }
+
+            $images = [];
+            foreach ($request->file('foto') as $file) {
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/images', $imageName);
+                $images[] = $imageName;
+            }
+            $product->foto = json_encode($images);
+        }
+
+        $product->save();
+
+        return redirect()->route('listproduct')->with('success', 'Produk berhasil diperbarui');
+    }
+
+    public function destroy($id_product) {
+            // Temukan produk berdasarkan ID
+    $product = Product::findOrFail($id_product);
+
+    // Hapus gambar yang terkait (jika ada)
+    if ($product->foto) {
+        foreach (json_decode($product->foto) as $foto) {
+            Storage::delete('public/images/' . $foto);
+        }
+    }
+
+    // Hapus produk dari database
+    $product->delete();
+
+    // Redirect ke daftar produk dengan pesan sukses
+    return redirect()->route('listproduct')->with('success', 'Produk berhasil dihapus.');
+    }
 
 }
