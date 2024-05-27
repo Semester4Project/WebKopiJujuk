@@ -212,6 +212,20 @@ a:focus {
   background-color: #f8f9fc !important
 }
 
+    /* Atur warna tombol "Next" dan "Previous" */
+    .carousel-control-prev,
+    .carousel-control-next {
+        color: #000000; /* Warna teks */
+        background-color: transparent; /* Warna latar belakang */
+    }
+
+    /* Atur warna tombol "Next" dan "Previous" ketika dihover */
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        color: #000000; /* Warna teks saat dihover */
+        background-color: transparent; /* Warna latar belakang saat dihover */
+    }
+    
 .bg-gray-200 {
   background-color: #eaecf4 !important
 }

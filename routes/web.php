@@ -52,10 +52,13 @@ Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlap
 
 Route::get('/product', [ListProductController::class, 'listproduct'])->name('listproduct');
 // Route untuk detail produk
-Route::get('/products/{id}', [ListProductController::class, 'detail'])->name('detailProduct');
+Route::get('/detail/{id_kategori}', [ListProductController::class, 'detail'])->name('detailProduct');
 
 Route::get('/TambahProduk', [ProductController::class, 'addproduct'])->name('addproduct');
 Route::post('/TambahProduk', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{id_product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id_product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name('addkategori');
 // Rute untuk menyimpan data kategori
