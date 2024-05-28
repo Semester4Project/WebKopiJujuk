@@ -28,24 +28,26 @@ class UserController extends Controller
             'email.email' => 'Email harus valid',
             'password.required' => 'Password wajib diisi',
         ]);
+        
+        $infologin = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($infologin)) {
             if (Auth::user()->role == 'admin') {
                 return redirect('admin/penjual');
-            } elseif (Auth::user()->role == 'customer') {
+            } elseif (Auth::user()->role == 'customer')
                 return redirect('admin/customer');
-            }
+        } else {
+            return redirect('')->withErrors('Username dan password yang dimasukkan salah')->withInput();
         }
-
-        return redirect()->route('login')->withErrors('Username dan password yang dimasukkan salah')->withInput();
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect('');
     }
 
     public function register(Request $request)
