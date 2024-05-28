@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -87,3 +88,4 @@ Route::middleware(['auth', 'userAkses:customer'])->group(function () {
 });
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+>>>>>>> b98381a8d5d60669ea75e7257408096f144cac9a
