@@ -42,6 +42,10 @@ Route::get('/rumah', function () {
     return view('rumah');
 });
 
+Route::get('/profil', function () {
+    return view('fitur.profil');
+});
+
 
 Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
 Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
@@ -60,33 +64,6 @@ Route::post('/TambahProduk', [ProductController::class, 'store'])->name('product
 Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name('addkategori');
 // Rute untuk menyimpan data kategori
 Route::post('/TambahKategori', [KategoriController::class, 'store'])->name('categories.store');
-
-// Route::middleware(['guest'])->group(function (){
-//     // Route::get('/login', [UserController::class, 'index']); // Hapus middleware guest di sini
-//     Route::get('/login', function () {
-//         return view('login');
-//     });
-//     Route::post('/login', [UserController::class, 'login'])->name('login');
-// });
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-//     Route::middleware(['userAkses:admin'])->group(function () {
-//         Route::get('/home', function () {
-//             return redirect()->route('index'); // Mengarahkan kembali ke rute admin.index
-//         })->name('layout.home'); // Mengatur nama untuk rute home admin
-//         Route::get('/admin', [AdminController::class, 'index'])->name('index');
-//         Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
-//     });
-
-//     Route::middleware(['userAkses:customer'])->group(function () {
-//         Route::get('/home', function () {
-//             return redirect()->route('customer'); // Mengarahkan kembali ke rute customer
-//         })->name('layout.customer'); // Mengatur nama untuk rute home customer
-//         Route::get('/customer', [AdminController::class, 'customer'])->name('customer');
-//     });
-// });
 
 Route::get('/login', function () {
     return view('login');
