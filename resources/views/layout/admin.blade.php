@@ -16,6 +16,7 @@
 </head>
 
 <body id="page-top">
+  @if (Auth::user()->role == 'admin')
   <div id="wrapper">
     <!-- Sidebar -->
     @include('layout.sidebar')
@@ -64,6 +65,7 @@
       }
     }
   </script> 
+  @endif
 </body>
 
 </html>

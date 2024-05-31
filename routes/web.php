@@ -69,23 +69,38 @@ Route::get('/TambahKategori', [KategoriController::class, 'addkategori'])->name(
 // Rute untuk menyimpan data kategori
 Route::post('/TambahKategori', [KategoriController::class, 'store'])->name('categories.store');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('login');
+// })->name('login');
 
-Route::post('/login', [UserController::class, 'login'])->name('login.post');
+// Route::post('/login', [UserController::class, 'login'])->name('login.post');
 
-Route::middleware(['auth', 'userAkses:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard');
-    })->name('admin.dashboard');
+// Route::middleware(['auth', 'userAkses:admin'])->group(function () {
+//     Route::get('/admin/dashboard', function () {
+//         return view('dashboard');
+//     })->name('admin.dashboard');
+// });
+
+// Route::middleware(['auth', 'userAkses:customer'])->group(function () {
+//     Route::get('/customer/dashboard', function () {
+//         return view('layout.user');
+//     })->name('customer.dashboard');
+// });
+
+// Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [UserController::class, 'index'])->name('login');
+    Route::post('/login', [UserController::class, 'login']);
 });
 
-Route::middleware(['auth', 'userAkses:customer'])->group(function () {
-    Route::get('/customer/dashboard', function () {
-        return view('layout.user');
-    })->name('customer.dashboard');
+Route::get('/home',function(){
+    return redirect('/admin');
 });
 
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
->>>>>>> b98381a8d5d60669ea75e7257408096f144cac9a
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [adminController::class, 'index']);
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('admin/dashboard', [adminController::class, 'admin'])->middleware('userAkses:admin')->name('admin.dashboard');
+    Route::get('admin/customer', [adminController::class, 'customer'])->middleware('userAkses:customer');
+});
