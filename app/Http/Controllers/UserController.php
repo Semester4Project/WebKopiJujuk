@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Storage;
 
 class UserController extends Controller
 {
@@ -31,25 +33,80 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required'
         ], [
-            'email.required' => 'Email Wajib Di isi',
-            'password.required' => 'Password Wajib Di isi',
+            'email.required' => 'Email Wajib Diisi',
+            'password.required' => 'Password Wajib Diisi',
         ]);
-
+    
         $infologin = [
             'email' => $request->email,
             'password' => $request->password,
         ];
-
+    
         if(Auth::attempt($infologin)) {
-            if (Auth::user()->role == 'admin') {
+            $user = Auth::user();
+            dd($user); // Dump dan die untuk melihat pengguna yang terautentikasi dan role mereka
+    
+            if ($user->role == 'admin') {
                 return redirect('admin/dashboard');
-            } elseif (Auth::user()->role == 'customer') {
+            } elseif ($user->role == 'customer') {
                 return redirect('admin/customer');
             }
         } else {
             return redirect('')->withErrors('Username dan password yang dimasukkan tidak sesuai')->withInput();
         }
     }
+
+
+    public function showResetPasswordForm()
+    {
+        return view('auth.passwords.email');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function showResetForm($token)
+    {
+        return view('auth.passwords.reset', ['token' => $token]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+
+                $user->setRememberToken(Str::random(60));
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
+
+    }
+    
 
 
     public function logout()

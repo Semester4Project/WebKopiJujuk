@@ -47,6 +47,19 @@ Route::get('/profil', function () {
     return view('fitur.profil');
 });
 
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+
+Route::get('/lupapassword', function () {
+    return view('lupapassword');
+});
+
 
 Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
 Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
@@ -93,6 +106,13 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login', [UserController::class, 'index'])->name('login');
     Route::post('/login', [UserController::class, 'login']);
 });
+
+
+Route::get('password/reset', [UserController::class, 'showResetPasswordForm'])->name('password.request');
+Route::post('password/email', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [UserController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [UserController::class, 'resetPassword'])->name('password.update');
+
 
 Route::get('/home',function(){
     return redirect('/admin');
