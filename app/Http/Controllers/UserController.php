@@ -103,6 +103,26 @@ class UserController extends Controller
     
 
 
+    public function sendOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+    
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['message' => 'Email tidak ditemukan.'], 404);
+        }
+    
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        // Simpan OTP ke database atau kirim melalui email
+        // Contoh: $user->otp = $otp; $user->save();
+        // atau kirim email dengan kode OTP
+    
+        return response()->json(['message' => 'OTP telah dikirim ke email Anda.']);
+    }
+    
+
+
     public function logout()
     {
         Auth::logout();

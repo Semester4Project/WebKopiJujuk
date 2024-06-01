@@ -61,6 +61,9 @@ Route::get('/lupapassword', function () {
 });
 
 
+Route::post('send-otp', [UserController::class, 'sendOtp'])->name('send.otp');
+
+
 Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('PesananBaru');
 Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
 Route::get('/PesananDikrim', [PesananController::class, 'PesananDikirim'])->name('Pesanandikirim');
