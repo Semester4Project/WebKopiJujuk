@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\PasswordReset;
 
 class UserController extends Controller
@@ -15,6 +16,12 @@ class UserController extends Controller
     public function index()
     {
         return view('login');
+    }
+
+    public function profil()
+    {
+        $user = Auth::user();
+        return view('fitur.profil', compact('user'));
     }
     
     public function viewregister()
@@ -38,7 +45,7 @@ class UserController extends Controller
     
         if(Auth::attempt($infologin)) {
             $user = Auth::user();
-            dd($user); // Dump dan die untuk melihat pengguna yang terautentikasi dan role mereka
+            // dd($user); Dump dan die untuk melihat pengguna yang terautentikasi dan role mereka
     
             if ($user->role == 'admin') {
                 return redirect('admin/dashboard');
@@ -152,5 +159,52 @@ class UserController extends Controller
 
     return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
 }
+
+
+public function update(Request $request)
+{
+    
+    // Validasi data input
+    $request->validate([
+        'username' => 'required|string|max:255',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Mendapatkan pengguna yang sedang masuk
+    $user = Auth::user();
+
+    // Siapkan data untuk diperbarui
+    $data = [
+        'username' => $request->username,
+    ];
+
+    // Jika ada file gambar yang diunggah
+    if ($request->hasFile('profile_picture')) {
+        // Hapus gambar profil lama jika ada
+        if (!empty($user->profile_picture)) {
+            $oldProfilePictures = json_decode($user->profile_picture, true);
+            if (is_array($oldProfilePictures)) {
+                foreach ($oldProfilePictures as $profile) {
+                    Storage::delete('public/images/profil/' . $profile);
+                }
+            }
+        }
+
+                // Simpan file gambar yang baru
+                $file = $request->file('profile_picture');
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('images/profil'), $imageName);
+                $data['profile_picture'] = $imageName;
+    }
+     /** @var \App\Models\User $user **/
+    // Perbarui data pengguna
+   
+    $user->update($data);
+
+    // Arahkan kembali ke halaman profil admin dengan pesan sukses
+    return redirect()->route('admin.profile')->with('success', 'Profil berhasil diperbarui');
+}
+
+
 
 }

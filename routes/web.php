@@ -121,9 +121,12 @@ Route::get('/home',function(){
     return redirect('/admin');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','userAkses:admin'])->group(function () {
     Route::get('/admin', [adminController::class, 'index']);
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-    Route::get('admin/dashboard', [adminController::class, 'admin'])->middleware('userAkses:admin')->name('admin.dashboard');
-    Route::get('admin/customer', [adminController::class, 'customer'])->middleware('userAkses:customer');
+    Route::get('admin/dashboard', [adminController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/admin/profile', [UserController::class, 'profil'])->name('admin.profile');
+    Route::post('/admin/profile', [UserController::class, 'update'])->name('admin.profile.update');;
 });
+
+Route::get('admin/customer', [adminController::class, 'customer'])->middleware('userAkses:customer');
