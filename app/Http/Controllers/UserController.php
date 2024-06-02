@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Http\Controllers\Storage;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\PasswordReset;
 
 class UserController extends Controller
 {
@@ -44,7 +45,7 @@ class UserController extends Controller
     
         if(Auth::attempt($infologin)) {
             $user = Auth::user();
-            dd($user); // Dump dan die untuk melihat pengguna yang terautentikasi dan role mereka
+            // dd($user); Dump dan die untuk melihat pengguna yang terautentikasi dan role mereka
     
             if ($user->role == 'admin') {
                 return redirect('admin/dashboard');
@@ -164,7 +165,7 @@ public function update(Request $request)
             $oldProfilePictures = json_decode($user->profile_picture, true);
             if (is_array($oldProfilePictures)) {
                 foreach ($oldProfilePictures as $profile) {
-                    Storage::delete('public/images/' . $profile);
+                    Storage::delete('public/images/profil/' . $profile);
                 }
             }
         }
@@ -172,7 +173,7 @@ public function update(Request $request)
                 // Simpan file gambar yang baru
                 $file = $request->file('profile_picture');
                 $imageName = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/images', $imageName);
+                $file->move(public_path('images/profil'), $imageName);
                 $data['profile_picture'] = $imageName;
     }
      /** @var \App\Models\User $user **/

@@ -40,7 +40,7 @@
                                     @endphp
                                     @if(is_array($fotos) && count($fotos) > 0)
                                         {{-- Menampilkan hanya foto pertama --}}
-                                        <img src="{{ asset('storage/images/' . $fotos[0]) }}" alt="Product Image" style="max-width: 100px;">
+                                        <img src="{{ asset('images/' . $fotos[0]) }}" alt="Product Image" style="max-width: 100px;">
                                     @endif
                                 @else
                                     <span>No Image</span>
