@@ -14,7 +14,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id('id_product'); // Primary key
+            $table->bigIncrements('id_product'); // Primary key
             $table->string('nama_produk'); // Nama produk
             $table->unsignedBigInteger('id_kategori'); // Kolom id_kategori yang akan menjadi foreign key
             $table->text('deskripsi')->nullable(); // Deskripsi produk

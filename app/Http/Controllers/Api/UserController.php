@@ -19,7 +19,7 @@ class UserController extends Controller
     public function createUser(Request $request)
     {
         try {
-            //Validated
+            // Validate
             $validateUser = Validator::make($request->all(), 
             [
                 'username' => 'required',
@@ -27,10 +27,10 @@ class UserController extends Controller
                 'password' => 'required'
             ]);
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
@@ -39,13 +39,13 @@ class UserController extends Controller
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => 'customer' // Atur peran pengguna di sini
+                'role' => 'customer' // Set user role here
             ]);
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'user' => $user
             ], 200);
 
         } catch (\Throwable $th) {
@@ -70,15 +70,15 @@ class UserController extends Controller
                 'password' => 'required'
             ]);
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -90,7 +90,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'user' => $user
             ], 200);
 
         } catch (\Throwable $th) {
@@ -101,24 +101,24 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Logout The User
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logoutUser(Request $request)
-{
-    try {
-        // Ambil token pengguna dari header Authorization
-        $token = $request->bearerToken();
-
-        // Hapus token dari database
-        $request->user()->tokens()->where('id', $token)->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'User Logged Out Successfully'
-        ], 200);
-    } catch (\Throwable $th) {
-        return response()->json([
-            'status' => false,
-            'message' => $th->getMessage()
-        ], 500);
+    {
+        try {
+            Auth::logout();
+            return response()->json([
+                'status' => true,
+                'message' => 'User Logged Out Successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
-}
 }

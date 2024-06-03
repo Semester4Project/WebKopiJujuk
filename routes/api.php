@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProductApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::post('/auth/register', [UserController::class, 'createUser']);
+// Route::post('/auth/login', [UserController::class, 'loginUser']);
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::post('/auth/logout', [UserController::class, 'logoutUser']);
+// });
+
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/auth/logout', [UserController::class, 'logoutUser']);
-});
+Route::post('/auth/logout', [UserController::class, 'logoutUser']);
+
+Route::get('/products', [ProductApi::class, 'listProduct']);
+Route::get('/products/{id}', [ProductApi::class, 'detail']);
+Route::get('/categories', [ProductApi::class, 'listCategories']);
+Route::get('/products-and-categories', [ProductApi::class, 'listProductsAndCategories']);
