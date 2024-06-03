@@ -27,7 +27,7 @@
                 </div>
             @endif
         </div>
-        <form action="" method="POST">
+        <form action="{{ route('register.post') }}" method="POST">
             @csrf
             <div class="login-form">
                 <img src="{{asset('img/email.png')}}" alt="username" class="email-logo">
@@ -38,8 +38,9 @@
                 <input type="email" class="form-control mb-3 input" id="email" value="{{old('email')}}" name="email" placeholder="Masukkan Email">
                 <img src="{{asset('img/lock.png')}}" alt="eye" class="lock">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control mb-3 input" id="password" name="password" placeholder="Masukkan Password">
-                <a href="#" class="d-block mb-3 forget">Forget Password</a>
+                <input type="password" name="password" class="form-control mb-3 input" placeholder="Masukkan Password">
+                <input type="password" name="password_confirmation" class="form-control mb-3 input" placeholder="Konfirmasi Password">
+
                 <button type="submit" class="btn btn-primary login d-flex justify-content-center align-items-center">Register</button>
                 <span class="text">Sudah Punya Akun? <a href="/login" class="register">Login akun</a></span>
             </div>

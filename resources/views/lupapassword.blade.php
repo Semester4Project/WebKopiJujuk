@@ -36,6 +36,9 @@
                 
                 <!-- Tambahkan tombol untuk mengirim OTP -->
                 <button type="button" class="btn btn-secondary mb-3" id="send-otp">Kirim OTP</button>
+                <img src="{{ asset('img/lock.png') }}" alt="eye" class="lock">
+                <label for="otp" class="form-label">masukkan kode OTP</label>
+                <input type="otp" class="form-control mb-3 input" id="otp" name="otp" placeholder="Masukkan Kode OTP">
 
                 <img src="{{ asset('img/lock.png') }}" alt="eye" class="lock">
                 <label for="password" class="form-label">Password Baru</label>

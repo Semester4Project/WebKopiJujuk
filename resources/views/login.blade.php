@@ -36,7 +36,7 @@
                 <img src="{{asset('img/lock.png')}}" alt="eye" class="lock">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control mb-3 input" id="password" name="password" placeholder="Masukkan Password">
-                <a href="#" class="d-block mb-3 forget">Forget Password</a>
+                <a href="/lupapassword" class="d-block mb-3 forget">Forget Password</a>
                 <button type="submit" class="btn btn-primary login d-flex justify-content-center align-items-center">Login</button>
                 <span class="text">Belum punya akun <a href="/register" class="regis">Buat akun</a></span>
             </div>
