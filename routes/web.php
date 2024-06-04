@@ -68,6 +68,7 @@ Route::get('/PesananBaru', [PesananController::class, 'PesananBaru'])->name('Pes
 Route::get('/PesananSiapDikrim', [PesananController::class, 'PesananSiapDikirim'])->name('pesanansiapdikirim');
 Route::get('/PesananDikrim', [PesananController::class, 'PesananDikirim'])->name('Pesanandikirim');
 Route::get('/PesananSelesai', [PesananController::class, 'PesananSelesai'])->name('Pesananselesai');
+Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show');
 
 Route::get('/Laporan', [LaporanController::class, 'viewLaporan'])->name('viewlaporan');
 
@@ -123,10 +124,11 @@ Route::get('/home',function(){
 
 Route::middleware(['auth','userAkses:admin'])->group(function () {
     Route::get('/admin', [adminController::class, 'index']);
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    
     Route::get('admin/dashboard', [adminController::class, 'admin'])->name('admin.dashboard');
     Route::get('/admin/profile', [UserController::class, 'profil'])->name('admin.profile');
     Route::post('/admin/profile', [UserController::class, 'update'])->name('admin.profile.update');;
 });
 
 Route::get('admin/customer', [adminController::class, 'customer'])->middleware('userAkses:customer');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
