@@ -133,32 +133,34 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('');
+        return redirect('/login');
     }
 
     public function register(Request $request)
-{
-    $request->validate([
-        'username' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|string|min:5', // Ubah minimal karakter menjadi 6 (sesuai kebutuhan Anda)
-    ], [
-        'username.required' => 'Nama pengguna wajib diisi',
-        'email.required' => 'Email wajib diisi',
-        'email.email' => 'Email harus valid',
-        'email.unique' => 'Email sudah digunakan',
-        'password.required' => 'Password wajib diisi',
-        'password.min' => 'Password minimal harus 5 karakter', // Sesuaikan pesan error minimal karakter
-    ]);
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|string|min:5|confirmed',
+        ], [
+            'username.required' => 'Nama pengguna wajib diisi',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Email harus valid',
+            'email.unique' => 'Email sudah digunakan',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal harus 5 karakter',
+            
+        ]);
 
-    $user = new User();
-    $user->username = $request->input('username');
-    $user->email = $request->input('email');
-    $user->password = Hash::make($request->input('password'));
-    $user->save();
+        $user = new User();
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->role = 'admin';  // Set role sebagai admin
+        $user->save();
 
-    return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
-}
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+    }
 
 
 public function update(Request $request)

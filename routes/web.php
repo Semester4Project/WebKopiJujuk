@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +48,12 @@ Route::get('/profil', function () {
     return view('fitur.profil');
 });
 
-Route::get('/register', function () {
-    return view('register');
-});
+// Route::get('/register', function () {
+//     return view('register');
+// });
+// Menampilkan formulir registrasi
+
+
 
 Route::get('/login', function () {
     return view('login');
@@ -59,6 +63,9 @@ Route::get('/login', function () {
 Route::get('/lupapassword', function () {
     return view('lupapassword');
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
 
 
 Route::post('send-otp', [UserController::class, 'sendOtp'])->name('send.otp');
@@ -111,6 +118,11 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [UserController::class, 'login']);
 });
 
+
+Route::get('/register', [UserController::class, 'viewregister'])->name('register');
+Route::post('/register', [UserController::class, 'register'])->name('register.post');
+
+// Route::get('/register', [UserController::class, 'viewregister'])->name('register');
 
 Route::get('password/reset', [UserController::class, 'showResetPasswordForm'])->name('password.request');
 Route::post('password/email', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
