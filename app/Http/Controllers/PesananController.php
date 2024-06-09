@@ -2,35 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\Pesanan;
 use Carbon\Carbon;
-use App\Models\Keranjang;
+
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Pesanan;
 use App\Models\Product;
+use App\Models\Keranjang;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
 {
     public function PesananBaru() {
-        $pesananBaru = Pesanan::where('status_pesanan', 'Pesanan Baru')->get();
-        return view('pesanan.pesananbaru', compact('pesananBaru'));
+        // Mengambil data pesanan dan informasi pelanggan yang terkait
+        $orders = DB::table('orders')
+                ->join('carts', 'orders.id_carts', '=', 'carts.id_carts')
+                ->join('products', 'carts.id_product', '=', 'products.id_product')
+                ->join('users', 'carts.user_id', '=', 'users.user_id')
+                ->select('orders.order_id', 'users.username as customer', 'products.harga', 'orders.status_pesanan')
+                ->where('orders.status_pesanan', '=', 'Pesanan Baru')
+                ->get();
+
+        // Kirim data pesanan ke view
+        return view('pesanan.pesananbaru', compact('orders'));
     }
 
     public function PesananSiapDikirim() {
-        $pesananSiapDikirim = Pesanan::where('status_pesanan', 'Pesanan Siap Dikirim')->get();
-        return view('pesanan.pesananSiapDikirim', compact('pesananSiapDikrim'));
-    }
+        $orders = DB::table('orders')
+                ->join('carts', 'orders.id_carts', '=', 'carts.id_carts')
+                ->join('products', 'carts.id_product', '=', 'products.id_product')
+                ->join('users', 'carts.user_id', '=', 'users.user_id')
+                ->select('orders.order_id', 'users.username as customer', 'products.harga', 'orders.status_pesanan')
+                ->where('orders.status_pesanan', '=', 'Pesanan Siap Dikirim')
+                ->get();
+
+    return view('pesanan.pesananSiapDikirim', ['orders' => $orders]);
+}
 
     public function PesananDikirim() {
-        $pesananDikirim = Pesanan::where('status_pesanan', 'Pesanan Dikirim')->get();
-        return view('pesanan.pesananDikirim', compact('pesananDikrim'));
-    }
+        $orders = DB::table('orders')
+                ->join('carts', 'orders.id_carts', '=', 'carts.id_carts')
+                ->join('products', 'carts.id_product', '=', 'products.id_product')
+                ->join('users', 'carts.user_id', '=', 'users.user_id')
+                ->select('orders.order_id', 'users.username as customer', 'products.harga', 'orders.status_pesanan')
+                ->where('orders.status_pesanan', '=', 'Pesanan Di Kirim')
+                ->get();
+
+    return view('pesanan.pesananDikirim', ['orders' => $orders]);
+}
 
     public function PesananSelesai() {
-        $pesananSelesai = Pesanan::where('status_pesanan', 'Pesanan Selesai')->get();
-        return view('pesanan.pesananSelesai', compact('pesananSelesai'));
-    }
+        $orders = DB::table('orders')
+                ->join('carts', 'orders.id_carts', '=', 'carts.id_carts')
+                ->join('products', 'carts.id_product', '=', 'products.id_product')
+                ->join('users', 'carts.user_id', '=', 'users.user_id')
+                ->select('orders.order_id', 'users.username as customer', 'products.harga', 'orders.status_pesanan')
+                ->where('orders.status_pesanan', '=', 'Pesanan Selesai')
+                ->get();
+
+    return view('pesanan.pesananSelesai', ['orders' => $orders]);
+}
 
     public function show($id)
     {
