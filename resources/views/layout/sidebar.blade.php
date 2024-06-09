@@ -34,7 +34,7 @@
             <span>Product</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{{route('viewlaporan')}}">
+          <a class="nav-link" href="{{route('laporan.index')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Laporan</span></a>
         </li>
