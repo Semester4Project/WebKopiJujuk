@@ -1,6 +1,29 @@
 <?php
 
+use Illuminate\Bus\BusServiceProvider;
 use Illuminate\Support\Facades\Facade;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Mail\MailServiceProvider;
+use Illuminate\View\ViewServiceProvider;
+use Illuminate\Cache\CacheServiceProvider;
+use Illuminate\Queue\QueueServiceProvider;
+use Illuminate\Redis\RedisServiceProvider;
+use Illuminate\Hashing\HashServiceProvider;
+use Illuminate\Cookie\CookieServiceProvider;
+use Illuminate\Session\SessionServiceProvider;
+use Illuminate\Database\DatabaseServiceProvider;
+use Illuminate\Pipeline\PipelineServiceProvider;
+use Illuminate\Encryption\EncryptionServiceProvider;
+use Illuminate\Filesystem\FilesystemServiceProvider;
+use Illuminate\Pagination\PaginationServiceProvider;
+use Illuminate\Validation\ValidationServiceProvider;
+use Illuminate\Broadcasting\BroadcastServiceProvider;
+use Illuminate\Translation\TranslationServiceProvider;
+use Illuminate\Notifications\NotificationServiceProvider;
+use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
+use Illuminate\Foundation\Providers\FoundationServiceProvider;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
+use Illuminate\Foundation\Providers\ConsoleSupportServiceProvider;
 
 return [
 
@@ -185,6 +208,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -196,6 +220,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -209,7 +235,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ])->toArray(),
+
+
 
 ];

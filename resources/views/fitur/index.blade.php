@@ -1,5 +1,3 @@
-// resources/views/fitur/laporan.blade.php
-
 @extends('layout.admin')
 
 @section('content')
@@ -19,6 +17,7 @@
                         <input type="date" name="tanggalAkhir" class="form-control" value="{{ $tanggalAkhir }}">
                     </div>
                     <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ url('laporan/export-pdf') }}?start_date={{ $tanggalAwal }}&end_date={{ $tanggalAkhir }}" class="btn btn-danger mb-2">Export PDF</a>
                 </form>
             </div>
             <div class="box-body table-responsive">

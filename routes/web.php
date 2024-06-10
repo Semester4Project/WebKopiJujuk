@@ -1,17 +1,19 @@
 <?php
 
+use Illuminate\Auth\Events\Login;
+use App\Http\Controllers\SendEmail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\lupapassword;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\ListProductController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\ListProductController;
+use App\Http\Controllers\AuthenticationController;
 
 
 /*
@@ -66,7 +68,16 @@ Route::get('/lupapassword', function () {
     return view('lupapassword');
 });
 
+Route::get('/reset', function () {
+    return view('resetpassword');
+});
+
+Route::post('/send-otp', [lupapassword::class, 'sendOtp'])->name('send.otp');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/send-email', [SendEmail::class, 'index']);
+
 
 
 
@@ -124,7 +135,7 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-
+Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF');
 
 
 

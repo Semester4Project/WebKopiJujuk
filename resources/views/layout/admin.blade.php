@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/admin.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,22 +48,22 @@
   <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{asset('js/ruang-admin.min.js')}}"></script>
   <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
-  <script src="{{asset('js/demo/chart-area-demo.js')}}"></script> 
+  <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
   {{-- font awesome --}}
   <script src="https://kit.fontawesome.com/a284969f0d.js" crossorigin="anonymous"></script>
   <script>
     function confirmLogout(event) {
       event.preventDefault(); // Menghentikan aksi default dari link
-  
+
       // Menampilkan dialog konfirmasi
       var confirmation = confirm("Apakah Anda yakin ingin logout?");
-  
+
       // Jika pengguna mengonfirmasi logout, kirimkan form
       if (confirmation) {
         document.getElementById('logoutForm').submit();
       }
     }
-  </script> 
+  </script>
   @endif
 </body>
 
