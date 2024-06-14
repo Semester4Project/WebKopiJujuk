@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressApi;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,3 +35,7 @@ Route::get('/products', [ProductApi::class, 'listProduct']);
 Route::get('/products/{id}', [ProductApi::class, 'detail']);
 Route::get('/categories', [ProductApi::class, 'listCategories']);
 Route::get('/products-and-categories', [ProductApi::class, 'listProductsAndCategories']);
+
+Route::post('/alamat', [AddressApi::class, 'store']);
+Route::get('/DataAlamat', [AddressApi::class, 'index']);
+Route::post('/users/{id}', [UserController::class, 'update']);

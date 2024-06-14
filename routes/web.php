@@ -36,6 +36,18 @@ Route::get('/kategori', function () {
     return view('fitur.kategori');
 });
 
+Route::get('/reset', function () {
+    return view('resetpassword');
+});
+
+Route::get('/lupapassword', function () {
+    return view('lupapassword');
+})->middleware('guest')->name('password.request');
+
+Route::post('/lupapassword', function () {
+    
+});
+
 Route::get('/TambahProduk', function () {
     return view('fitur.tambahproduk');
 });
@@ -60,9 +72,7 @@ Route::get('/login', function () {
 });
 
 
-Route::get('/lupapassword', function () {
-    return view('lupapassword');
-});
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 

@@ -121,4 +121,29 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+     // Method to update username and profile picture
+     public function update(Request $request, $id)
+     {
+         $validator = Validator::make($request->all(), [
+             'username' => 'required|string|max:255',
+             'profile_picture' => 'nullable|string', // assuming it's a URL or base64 string
+         ]);
+ 
+         if ($validator->fails()) {
+             return response()->json(['errors' => $validator->errors()], 422);
+         }
+ 
+         $user = User::find($id);
+ 
+         if (!$user) {
+             return response()->json(['message' => 'User not found'], 404);
+         }
+ 
+         $user->username = $request->username;
+         $user->profile_picture = $request->profile_picture;
+         $user->save();
+ 
+         return response()->json(['message' => 'User updated successfully', 'data' => $user], 200);
+     }
 }
