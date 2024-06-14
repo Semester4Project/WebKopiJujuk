@@ -1,16 +1,20 @@
 <?php
 
+use Illuminate\Auth\Events\Login;
+use App\Http\Controllers\SendEmail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\lupapassword;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\ListProductController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\ListProductController;
+use App\Http\Controllers\AuthenticationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +78,18 @@ Route::get('/login', function () {
 
 
 
+Route::get('/reset', function () {
+    return view('resetpassword');
+});
+
+Route::post('/send-otp', [lupapassword::class, 'sendOtp'])->name('send.otp');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/send-email', [SendEmail::class, 'index']);
+
+
+
 
 
 
@@ -129,6 +144,20 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF');
+
+
+
+// Route::get('/laporan', [PenjualanController::class, 'view'])->name('laporan.view');
+// Route::post('/laporan', [PenjualanController::class, 'refresh'])->name('laporan.refresh');
+// Route::get('/laporan/data/{awal}/{akhir}', [PenjualanController::class, 'data'])->name('laporan.data');
+// Route::get('/laporan/pdf/{awal}/{akhir}', [PenjualanController::class, 'exportPDF'])->name('laporan.export_pdf');
+// Route::post('/laporan/update_periode', 'LaporanController@updatePeriode')->name('laporan.update_periode');
+// Route::get('/laporan/data/{tanggalAwal}/{tanggalAkhir}', 'LaporanController@data')->name('laporan.data');
+
+
+
 Route::get('/register', [UserController::class, 'viewregister'])->name('register');
 Route::post('/register', [UserController::class, 'register'])->name('register.post');
 
@@ -146,7 +175,7 @@ Route::get('/home',function(){
 
 Route::middleware(['auth','userAkses:admin'])->group(function () {
     Route::get('/admin', [adminController::class, 'index']);
-    
+
     Route::get('admin/dashboard', [adminController::class, 'admin'])->name('admin.dashboard');
     Route::get('/admin/profile', [UserController::class, 'profil'])->name('admin.profile');
     Route::post('/admin/profile', [UserController::class, 'update'])->name('admin.profile.update');;

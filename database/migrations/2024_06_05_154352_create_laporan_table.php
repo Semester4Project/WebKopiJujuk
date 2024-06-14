@@ -1,31 +1,27 @@
 <?php
 
+// database/migrations/xxxx_xx_xx_create_laporans_table.php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateLaporanTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('laporan', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_barang');
-            $table->integer('jumlah_barang');
-            $table->decimal('total penjualan', 8, 2);
-            $table->date('tanggal_penjualan');
+            $table->date('tanggal');
+            $table->string('produk');
+            $table->decimal('pendapatan', 15, 2);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('laporan');
     }
-};
+}
+
