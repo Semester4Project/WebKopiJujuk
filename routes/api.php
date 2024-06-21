@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\AddressApi;
+use App\Http\Controllers\Api\ForgetPasswordApi;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductApi;
+use App\Http\Controllers\Api\ResetPasswordApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +41,13 @@ Route::get('/products-and-categories', [ProductApi::class, 'listProductsAndCateg
 Route::post('/alamat', [AddressApi::class, 'store']);
 Route::get('/DataAlamat', [AddressApi::class, 'index']);
 Route::post('/users/{id}', [UserController::class, 'update']);
+
+// Password reset routes
+Route::post('/lupa-password', [ForgetPasswordApi::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ResetPasswordApi::class, 'reset']);
+// Password reset routes
+// Route::post('/forgot-password', 'App\Http\Controllers\Api\ForgotPasswordApi@sendResetLinkEmail');
+// Route::post('/reset-password', 'App\Http\Controllers\Api\ResetPasswordApi@reset');
+// Password reset routes
+// Route::post('/forgot-password', 'App\Http\Controllers\Api\ForgotPasswordApi@sendResetLinkEmail')->name('api.password.request');
+// Route::post('/reset-password', 'App\Http\Controllers\Api\ResetPasswordApi@reset')->name('api.password.reset');

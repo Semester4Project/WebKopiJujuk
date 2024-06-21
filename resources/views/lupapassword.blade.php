@@ -36,21 +36,7 @@
                 <input type="email" class="form-control mb-3 input" id="email" value="{{ old('email') }}" name="email" placeholder="Masukkan Email">
 
                 <!-- Tambahkan tombol untuk mengirim OTP -->
-                <button type="button" class="btn btn-secondary mb-3" id="send-otp">Kirim OTP</button>
-                <img src="{{ asset('img/lock.png') }}" alt="eye" class="lock">
-                <label for="otp" class="form-label">masukkan kode OTP</label>
-                <input type="otp" class="form-control mb-3 input" id="otp" name="otp" placeholder="Masukkan Kode OTP">
-
-                <img src="{{ asset('img/lock.png') }}" alt="eye" class="lock">
-                <label for="password" class="form-label">Password Baru</label>
-                <input type="password" class="form-control mb-3 input" id="password" name="password" placeholder="Masukkan Password Baru">
-                
-                <img src="{{ asset('img/lock.png') }}" alt="eye" class="lock">
-                <label for="password-confirm" class="form-label">Konfirmasi Password</label>
-                <input type="password" class="form-control mb-3 input" id="password-confirm" name="password_confirmation" placeholder="Konfirmasi Password">
-                
-                <button type="submit" class="btn btn-primary login d-flex justify-content-center align-items-center">Reset password</button>
-                <span class="text">Sudah Punya Akun? <a href="/login" class="register">Login akun</a></span>
+                <button type="button" class="btn btn-secondary mb-3" id="send-otp">Kirim Link Reset Password</button>
             </div>
         </form>
     </div>
