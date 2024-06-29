@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('id_kategori'); // Kolom id_kategori yang akan menjadi foreign key
             $table->text('deskripsi')->nullable(); // Deskripsi produk
             $table->integer('berat'); // Berat produk
+            $table->integer('stock'); // stok produk
             $table->integer('harga'); // Harga produk
-            $table->integer('stok'); // stok produk
             $table->text('foto')->nullable(); // Foto produk
             $table->timestamps(); // Created_at dan updated_at
             

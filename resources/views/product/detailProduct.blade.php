@@ -24,6 +24,10 @@
                         <p>{{ $product->berat }} gram</p>
                     </div>
                     <div class="mb-3">
+                        <label for="stok" class="form-label">Stok:</label>
+                        <p>{{ $product->stock }} stock</p>
+                    </div>
+                    <div class="mb-3">
                         <label for="harga" class="form-label">Harga:</label>
                         <p>Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
                     </div>

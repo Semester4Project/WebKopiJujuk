@@ -27,6 +27,7 @@ class ProductController extends Controller
             'deskripsi' => 'required',
             'berat' => 'required|numeric',
             'harga' => 'required|numeric',
+            'stock' => 'required|integer',
         ]);
 
         // Simpan data ke database
@@ -36,6 +37,7 @@ class ProductController extends Controller
         $product->deskripsi = $request->deskripsi;
         $product->berat = $request->berat;
         $product->harga = $request->harga;
+        $product->stock = $request->stock;
 
         // Upload gambar
         if ($request->hasFile('foto')) {
@@ -86,6 +88,7 @@ public function update(Request $request, $id_product)
             'deskripsi' => 'required|string',
             'berat' => 'required|integer',
             'harga' => 'required|integer',
+            'stock' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +104,7 @@ public function update(Request $request, $id_product)
         $product->deskripsi = $request->deskripsi;
         $product->berat = $request->berat;
         $product->harga = $request->harga;
+        $product->stock = $request->stock;
 
         // Handle file upload for product images
         if ($request->hasFile('foto')) {

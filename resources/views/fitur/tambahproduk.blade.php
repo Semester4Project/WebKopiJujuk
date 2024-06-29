@@ -46,6 +46,10 @@
                 <input type="number" class="form-control" id="berat" name="berat" placeholder="Masukkan Berat dalam gram" value="{{ old('berat') }}">
             </div>
             <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+            <div class="form-group">
                 <label for="harga">Harga (Rupiah)</label>
                 <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga dalam Rupiah" value="{{ old('harga') }}">
             </div>
