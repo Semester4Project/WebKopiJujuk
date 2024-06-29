@@ -3,31 +3,33 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Product;
-use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // Ambil beberapa data kategori
-        $categories = Category::all();
-
-        // Tambahkan beberapa data produk untuk setiap kategori
-        foreach ($categories as $category) {
-            Product::create([
-                'nama_produk' => 'Produk ' . $category->id,
-                'id_kategori' => $category->id_kategori,
-                'deskripsi' => 'Deskripsi produk ' . $category->id,
-                'berat' => rand(100, 1000),
-                'harga' => rand(10000, 100000),
-                'foto' => null, // Tambahkan path foto jika ada
-            ]);
-        }
+        DB::table('products')->insert([
+            [
+                'id_product' => 1,
+                'nama_produk' => 'Product 1',
+                'id_kategori' => 1,
+                'deskripsi' => 'Description of Product 1',
+                'berat' => 500,
+                'stock' => 100,
+                'harga' => 10000,
+                'foto' => 'product1.jpg',
+            ],
+            [
+                'id_product' => 2,
+                'nama_produk' => 'Product 2',
+                'id_kategori' => 2,
+                'deskripsi' => 'Description of Product 2',
+                'berat' => 1000,
+                'stock' => 50,
+                'harga' => 20000,
+                'foto' => 'product2.jpg',
+            ],
+        ]);
     }
 }

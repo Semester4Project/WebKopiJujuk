@@ -1,6 +1,10 @@
 <?php
 
+
+
 // database/seeders/LaporanSeeder.php
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Laporan;
@@ -8,17 +12,24 @@ use Carbon\Carbon;
 
 class LaporanSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
     public function run()
     {
-        $tanggal = Carbon::now()->subDays(30);
+        $startDate = Carbon::now()->subMonths(1);
+        $endDate = Carbon::now();
 
-        for ($i = 0; $i < 30; $i++) {
+        while ($startDate->lte($endDate)) {
             Laporan::create([
-                'tanggal' => $tanggal->copy()->addDays($i),
-                'produk' => 'Produk ' . ($i + 1),
-                'pendapatan' => rand(100000, 1000000)
+                'tanggal' => $startDate->toDateString(),
+                'produk' => 'Produk ' . rand(1, 5), // Menghasilkan produk acak
+                'pendapatan' => rand(1000, 10000), // Menghasilkan pendapatan acak
             ]);
+
+            $startDate->addDay();
         }
     }
 }
-

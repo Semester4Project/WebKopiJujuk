@@ -15,6 +15,7 @@ class Laporan extends Model
     protected $fillable = [
         'tanggal',
         'keterangan',
+        'pendapatan'
         // tambahkan kolom lain sesuai kebutuhan
     ];
 
